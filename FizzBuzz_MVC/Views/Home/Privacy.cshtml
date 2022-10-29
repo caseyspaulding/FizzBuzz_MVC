@@ -1,6 +1,98 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "The Code";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<main class="flex-shrink-0">
+    <div class="container py-4 px-5 mt-5">
+        <h2 class="boarder-1 border-bottom border-dark">The Code for FizzBuzz.</h2>
+        <div class="row row-cols-1 row-cols-lg-2">
+            <div class="col-lg-8">
+                <pre class="line-numbers"><code class="language-csharp">
+                    //get values from the user. We need to get the fizz and the buzz value. 
+
+namespace FizzBuzz_MVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public IActionResult FizzBuzzPage()
+        {
+            FizzBuzz model = new FizzBuzz();
+
+            model.FizzValue = 3;
+            model.BuzzValue = 5;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FizzBuzzPage(FizzBuzz model)
+        {
+            List<string> fbItems = new List<string>();
+
+            bool Fizz;
+            bool Buzz;
+
+            for (int i = 1; i <= 100; i++)
+            {
+                Fizz = (i % model.FizzValue == 0);
+                Buzz = (i % model.BuzzValue == 0);
+
+                if (Fizz == true && Buzz == true)
+                {
+                    fbItems.Add("FizzBuzz");
+                }else if (Fizz == true)
+                {
+                    fbItems.Add("Fizz");
+                }else if(Buzz == true)
+                {
+                    fbItems.Add("Buzz");
+                }
+                else
+                {
+                    fbItems.Add(i.ToString());
+                }
+            }
+
+            model.Results = fbItems;
+
+            return View(model);
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+                </code>
+                </pre>
+            </div>
+            <div class="col-lg-4">
+                <p></p>
+                <h5>Summary</h5>
+                <p>This was a good challenge and practice getting my head around using loop statements, modulus, boolean logic, to change the data in a array.</p>
+            </div>
+        </div>
+    </div>
+
+</main>
